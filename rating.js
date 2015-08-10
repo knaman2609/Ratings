@@ -1,8 +1,9 @@
 require('./rating.css');
 
 (function($) {
+  
 	function ratingsTpl(id) {
-	return ('<fieldset class="rating">'+ 
+	 return ('<fieldset class="rating">'+ 
 		'<input type="radio" id="'+id+'star5" name="'+id+'rating" value="5" />'+ 
 		'<label class = "full" for="'+id+'star5" title="Awesome - 5 stars"></label>'+
 		'<input type="radio" id="'+id+'star4half" name="'+id+'rating" value="4.5" />'+ 
