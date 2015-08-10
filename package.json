@@ -1,0 +1,11 @@
+{
+  "name": "star-rating",
+  "version": "0.0.1",
+  "description": "Star rating generator for webPack",
+  "license": "MIT",
+  "repository": "knaman2609/Ratings",
+  "author": {
+    "name": "Naman Kalkhuria",
+    "email": "naman.kalkh@gmail.com"
+  }
+}
