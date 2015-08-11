@@ -1,6 +1,6 @@
 {
   "name": "rating-gen",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Star rating generator",
   "keywords": [
     "star-rating",
@@ -14,6 +14,6 @@
     "email": "naman.kalkh@gmail.com"
   },
   "dependencies": {
-      "jquery": "latest"
+    "jquery": "latest"
   }
 }
