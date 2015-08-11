@@ -1,11 +1,19 @@
 {
   "name": "star-rating",
   "version": "0.0.1",
-  "description": "Star rating generator for webPack",
+  "description": "Star rating generator",
+  "keywords": [
+    "star-rating",
+    "review"
+  ],
   "license": "MIT",
+  "main": "rating.js",
   "repository": "knaman2609/Ratings",
   "author": {
     "name": "Naman Kalkhuria",
     "email": "naman.kalkh@gmail.com"
+  },
+  "dependencies": {
+      "jQuery": "2.x"
   }
 }

@@ -1,98 +1,98 @@
-require('./rating.css');
+(function(root, factory) {
+  'use strict';
 
-(function($) {
-  
-	function ratingsTpl(id) {
-	 return ('<fieldset class="rating">'+ 
-		'<input type="radio" id="'+id+'star5" name="'+id+'rating" value="5" />'+ 
-		'<label class = "full" for="'+id+'star5" title="Awesome - 5 stars"></label>'+
-		'<input type="radio" id="'+id+'star4half" name="'+id+'rating" value="4.5" />'+ 
-		'<label class="half" for="'+id+'star4half" title="Pretty good - 4.5 stars"></label>'+
-		'<input type="radio" id="'+id+'star4" name="'+id+'rating" value="4" />'+ 
-		'<label class = "full" for="'+id+'star4" title="Pretty good - 4 stars"></label>'+ 
-		'<input type="radio" id="'+id+'star3half" name="'+id+'rating" value="3.5" />'+ 
-		'<label class="half" for="'+id+'star3half" title="Meh - 3.5 stars"></label> '+ 
-		'<input type="radio" id="'+id+'star3" name="'+id+'rating" value="3"/>'+ 
-		'<label class = "full" for='+id+'star3" title="Meh - 3 stars"></label>'+ 
-		'<input type="radio" id="'+id+'star2half" name="'+id+'rating" value="2.5" />'+ 
-		'<label class="half" for="'+id+'star2half" title="Kinda bad - 2.5 stars"></label>'+ 
-		'<input type="radio" id="'+id+'star2" name="'+id+'rating" value="2" />'+ 
-		'<label class = "full" for="'+id+'star2" title="Kinda bad - 2 stars"></label>'+ 
-		'<input type="radio" id="'+id+'star1half" name="'+id+'rating" value="1.5" />'+ 
-		'<label class="half" for="'+id+'star1half" title="Meh - 1.5 stars"></label>'+ 
-		'<input type="radio" id="'+id+'star1" name="'+id+'rating" value="1" />'+ 
-		'<label class = "full" for="'+id+'star1" title="Sucks big time - 1 star"></label>'+ 
-		'<input type="radio" id="'+id+'starhalf" name="'+id+'rating" value="0.5" />'+ 
-		'<label class="half" for="'+id+'starhalf" title="Sucks big time - 0.5 stars"></label>'+ 
-	'</fieldset>');
+  if (typeof exports === 'object') {
+
+    // CommonJS module
+    // Load jQuery as a dependency
+    var jQuery;
+    try {jQuery = require('jQuery'); } catch (e) {}
+
+    module.exports = factory(jQuery);
+  } else {
+    root.Rating = factory(root.jQuery);
+  }
 }
 
-function addListner() {
-	var self = this;
-	this.$element.find('input').on('click', function(e) {
-		if (self.options.readOnly) {
-			e.preventDefault();
-		} else {
-			self.ratings = $(this).val();
-			
-			if (typeof self.options.onSelect != 'undefined')
-			self.options.onSelect(self.ratings);
-		}
-	});
-}
+(this, function($) {
+  'use strict';
 
-// create the ratings 	
-function create() {
-	this.$element.html(ratingsTpl(this.options._id));
+  var createInputs = function(i, id, title) {
+    var inputStr = '<input type="radio" id="' + id + 'star' + i + '" name="' + id + ' rating" value="' + (i + 1) / 2 + '" />';
+    var labelStr = '<label class = "full" for="' + id + 'star' + i + '" title="' + title + '"></label>';
 
-	if (this.options.readOnly)
-	this.$element.find('.rating').addClass('readOnly');	
-	else 
-	this.$element.find('.rating').addClass('write');	
+    return inputStr + labelStr;
+  };
 
-	addListner.call(this)
-}
+  var ratingsTemplate = function(id) {
+    var $fieldset = $('<fieldset class="rating"></fieldset>');
 
-// constructor function	
-function Rating(options) {
-	this.options = $.extend(true, {}, this.DEFAULTS, options);
+    for (var i = 0; i < 10; i++) {
+      $fieldset.append(createInputs(i, id));
+    }
 
-	this.$element = this.options.field;
-    create.call(this);
-  
-   if (options.defaultRating)
-   this.set(options.defaultRating);
-}
+    return $fieldset;
+  };
 
-// getter
-Rating.prototype.get = function() {
-	return this.ratings;
-};
+  // create the ratings
+  var create = function($element, id, readOnly) {
+    $element.html(ratingsTemplate(id));
 
-// setter
-Rating.prototype.set = function(rating) {
-	var startFrom = ((5 - rating)*2);
+    if (readOnly)
+    $element.find('.rating').addClass('readOnly');
+    else
+    $element.find('.rating').addClass('write');
+  };
 
-	this.$element.find('input').each(function(i) {
-		if (startFrom >= i) {
-			$(this).prop('checked', 'true');
-		}
-	});
+  // handle click on radios
+  var _onClick = function(e) {
+    if (this.options.readOnly) {
+      e.preventDefault();
+    } else {
+      this.ratings = $(this).val();
 
-	this.ratings = rating;
-};
+      if (typeof this.options.onSelect != 'undefined')
+      this.options.onSelect(this.ratings);
+    }
+  };
 
-Rating.prototype.DEFAULTS = {
-	readOnly: false,
-	defaultRating : null,
-	_id: ''
-}
+  // constructor function
+  var Rating = function(options) {
+    this.options = $.extend(true, {}, this.DEFAULTS, options);
 
-if (typeof module == 'undefined')
-window.Rating = Rating;
-else
-module.exports = Rating;
+    this.$element = this.options.field;
+    create(this.$element, this.options._id, this.options.readOnly);
 
-})(jQuery);
+    this.$element.find('input').on('click', _onClick.bind(this));
 
+    if (options.defaultRating)
+    this.set(options.defaultRating);
+  };
+
+  // getter
+  Rating.prototype.get = function() {
+    return this.ratings;
+  };
+
+  // setter
+  Rating.prototype.set = function(rating) {
+    var startFrom = ((5 - rating) * 2);
+
+    this.$element.find('input').each(function(i) {
+      if (startFrom >= i) {
+        $(this).prop('checked', 'true');
+      }
+    });
+
+    this.ratings = rating;
+  };
+
+  Rating.prototype.DEFAULTS = {
+    readOnly: false,
+    defaultRating: null,
+    _id: '',
+  };
+
+  return Rating;
+}));
 
