@@ -22,8 +22,15 @@ The css file imports `font-awesome` , so replace the path with your local copy.
         }
     });
 
+if you are not using browserify/webpack  simply copy the `rating.js` and `rating.css` files, remove
+the require lines and start using. Rating will be attached to the window object.
+
 #### Options
 
 - readOnly: true, no hover effect and change in the ratings
+- _id: provide unique id if have multple star-ratings in the same html
+
+
+#### Api
 - rating.get() - gives the current rating
 - rating.set(2) - will set the ratings
