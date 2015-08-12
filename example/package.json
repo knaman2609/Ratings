@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "rating-gen": "0.0.2",
+    "rating-gen": "0.0.3",
     "jquery": "latest"
   }
 }
