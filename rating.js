@@ -77,7 +77,7 @@
 
     this.$element.find('input').on('click', _onClick.bind(this));
 
-    if (options.defaultRating)
+    if (this.options.defaultRating)
     this.set(options.defaultRating);
   };
 
@@ -102,6 +102,7 @@
   Rating.prototype.DEFAULTS = {
     readOnly: false,
     defaultRating: null,
+    field: $('<div></div>'),
     _id: '',
   };
 
