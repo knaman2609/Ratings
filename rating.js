@@ -63,7 +63,7 @@
     } else {
       this.ratings = $target.val();
 
-      if (typeof this.options.onSelect != 'undefined')
+      if (typeof this.options.onSelect !== 'undefined')
       this.options.onSelect(this.ratings);
     }
   };
