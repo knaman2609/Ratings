@@ -1,12 +1,13 @@
 var chai;
 var sinon;
-var sinonChai
+var sinonChai;
 var expect;
 
 var $;
 var Rating;
 var jsdom;
 
+// for running from terminal
 if (typeof exports === 'object') {
   sinon = require("sinon");
   sinonChai = require("sinon-chai");
@@ -27,7 +28,7 @@ if (typeof exports === 'object') {
 
 describe('Rating', function() {
   describe('constructor', function() {
-    it('should be an object', function() {
+    it('should be an objec;t', function() {
       var rating = new Rating();
       expect(rating).to.be.a('object');
     });
@@ -71,13 +72,14 @@ describe('Rating', function() {
     });
   });
 
+  // sinon js use
   describe('onSelect method test', function() {
-    it("should call the onSelect function and return ratings", function() {
+    it("should call the onSelect function and return ratings on click", function() {
       var cb = sinon.spy();
       var opt = {
         defaultRating: 3,
-        onSelect: cb
-      }
+        onSelect: cb,
+      };
 
       var rating = new Rating(opt);
       rating.$element.find('input:nth-child(1)').trigger('click');
